@@ -36,7 +36,6 @@ return {
       center = {
         {icon = "  ", desc = "Find Word        ", key = "leader g", action = ""},
         {icon = "  ", desc = "Find File        ", key = "leader f", action = ""},
-        {icon = "  ", desc = "File Browser     ", key = "<C-N>", action = ""},
       }
      }
     })
