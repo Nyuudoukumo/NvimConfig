@@ -3,7 +3,7 @@ local servers =
       "lua_ls",
       "clangd",
       "cmake",
-      "rust_analyzer"
+      "rust_analyzer",
     }
 
 return {
@@ -28,12 +28,18 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       for _,server in ipairs(servers) do
-        lspconfig[server].setup({})
+        lspconfig[server].setup({
+          capabilities = capabilities
+        })
       end
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities
+      })
 
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+      vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
       vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
 
     end

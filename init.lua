@@ -1,3 +1,3 @@
-require "vimConfig.options"
-require "vimConfig.keymaps"
-require "lazynvim"
+require("vimConfig.options")
+require("vimConfig.keymaps")
+require("lazynvim")
