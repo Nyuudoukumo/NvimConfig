@@ -41,6 +41,17 @@ return {
       vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
       vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
 
+      --使用悬浮窗口显示报错信息
+      vim.keymap.set('n', '<leader>e', ":lua vim.diagnostic.open_float(nil,{focus=false})<CR>",{})
+      vim.diagnostic.config({
+        virtual_text = false
+      })
+--
+--      -- Show line diagnostics automatically in hover window
+--      vim.o.updatetime = 250
+--      vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+
     end
   }
 }
