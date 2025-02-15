@@ -62,6 +62,7 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 -- Better terminal navigation
 keymap("n", "<leader>sv", ":vsplit<CR>", opts)
 keymap("n", "<leader>s", ":split<CR>", opts)
+keymap("t", "<Esc>", "<C-\\><C-N>", opts)
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
