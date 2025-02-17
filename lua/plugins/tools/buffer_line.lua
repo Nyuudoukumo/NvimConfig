@@ -3,8 +3,12 @@ return{
   version = "*",
   dependencies = 'nvim-tree/nvim-web-devicons',
   config = function ()
+
     vim.keymap.set("n","<A-h>",":BufferLineMovePrev<CR>",opt)
     vim.keymap.set("n","<A-l>",":BufferLineMoveNext<CR>",opt)
+    vim.keymap.set("n","<S-h>",":BufferLineCyclePrev<CR>",opt)
+    vim.keymap.set("n","<S-l>",":BufferLineCycleNext<CR>",opt)
+
     vim.opt.termguicolors = true
     require("bufferline").setup{
       options = {
