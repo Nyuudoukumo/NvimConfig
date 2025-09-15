@@ -33,7 +33,19 @@ return {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
+        view = {
+          docs = {
+            auto_open = false,
+          }
+        },
         mapping = cmp.mapping.preset.insert({
+          ['K'] = function()
+            if cmp.visible_docs() then
+              cmp.close_docs()
+            else
+              cmp.open_docs()
+            end
+          end,
           ["<A-k>"] = cmp.mapping.select_prev_item(),
           ["<A-j>"] = cmp.mapping.select_next_item(),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
