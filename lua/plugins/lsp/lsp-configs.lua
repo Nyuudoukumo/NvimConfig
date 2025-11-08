@@ -33,6 +33,14 @@ return {
         }
       end
 
+      -- >>> Inlay Hints
+      -- 默认开启Inlay Hints
+      vim.keymap.set('n', '<leader>th', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+      end, { desc = '[T]oggle Inlay [H]ints' })
+      vim.lsp.inlay_hint.enable(true)
+      -- <<< Inlay Hints
+
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
       vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, {})
