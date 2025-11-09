@@ -27,9 +27,26 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      
+      -- 设置较小的 updatetime 让 CursorHold 更快触发
+      vim.o.updatetime = 250
+
+      -- on_attach: 为支持 documentHighlight 的服务器设置高亮 autocmd
+      local on_attach = function(client, bufnr)
+        if client.server_capabilities.documentHighlightProvider then
+          if client.server_capabilities.documentHighlightProvider then
+            local group = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = false })
+            vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI"},{group = group, buffer = bufnr, callback = function() vim.lsp.buf.document_highlight() end,})
+            vim.api.nvim_create_autocmd({ "CursorMoved", "BufLeave" }, {group = group,buffer = bufnr,callback = function() vim.lsp.buf.clear_references() end,})
+          end
+        end
+      end
+
       for _,server in ipairs(servers) do
         vim.lsp.config[server] = {
-          capabilities = capabilities
+          capabilities = capabilities,
+          on_attach = on_attach,
         }
       end
 
