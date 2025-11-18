@@ -42,9 +42,32 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
+
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
+
+--wsl粘贴板--
+if vim.fn.has('wsl') then
+  vim.cmd [[
+  augroup Yank
+  autocmd!
+  autocmd TextYankPost * : call system('/mnt/c/Windows/System32/clip.exe ',@")
+  augroup END
+  ]]
+  vim.g.clipboard = {
+    copy = {
+      ['+'] = 'win32yank.exe -i --crlf',
+      ['*'] = 'win32yank.exe -i --crlf',
+    },
+    paste = {
+      ['+'] = 'win32yank.exe -o --lf',
+      ['*'] = 'win32yank.exe -o --lf',
+    },
+    cache_enabled = true,
+  }
+end
+--wsl粘贴板--
 
 --保存后自动格式化
 --local augroup = vim.api.nvim_create_augroup
