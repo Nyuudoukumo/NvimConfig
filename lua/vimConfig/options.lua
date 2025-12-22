@@ -51,7 +51,7 @@ vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 
 --wsl粘贴板--
-if vim.fn.has('wsl') then
+if vim.fn.has('wsl') == 1 then
   vim.cmd [[
   augroup Yank
   autocmd!
