@@ -9,7 +9,10 @@ local M = {
         ensure_installed = {"markdown","markdown_inline","lua", "javascript", "c",
         "cpp", "vim", "rust", "html"},
         highlight = { enable = true },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+          disable = { "c", "cpp" },
+        },
       })
     end
 }
