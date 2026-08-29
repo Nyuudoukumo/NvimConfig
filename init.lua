@@ -1,5 +1,6 @@
 if vim.g.vscode then
 	require("vimConfig.vscode")
+	require("lazynvim")
 	return
 end
 

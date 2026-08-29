@@ -21,10 +21,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- 3. 加载lazy.nvim模块
-require("lazy").setup(
-  { 
-    { import = "plugins.ui" }, 
-    { import = "plugins.tools" }, 
-    { import = "plugins.lsp" },
-  }
-)
+-- VSCode owns the UI and language tooling, so only load explicitly approved
+-- text-editing plugins there. This keeps incompatible plugins from crashing
+-- the embedded Neovim process.
+local plugins
+if vim.g.vscode then
+    plugins = {
+        require("plugins.tools.surround"),
+    }
+else
+    plugins = {
+        { import = "plugins.ui" },
+        { import = "plugins.tools" },
+        { import = "plugins.lsp" },
+    }
+end
+
+require("lazy").setup(plugins)
