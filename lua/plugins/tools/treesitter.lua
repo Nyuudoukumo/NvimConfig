@@ -1,20 +1,36 @@
-local M = {
-    "nvim-treesitter/nvim-treesitter",
-    build = function()
-        require("nvim-treesitter.install").update({ with_sync = true })()
-    end,
-    config = function()
-      local config = require("nvim-treesitter.configs")
-      config.setup({
-        ensure_installed = {"markdown","markdown_inline","lua", "javascript", "c",
-        "cpp", "vim", "rust", "html"},
-        highlight = { enable = true },
-        indent = {
-          enable = true,
-          disable = { "c", "cpp" },
-        },
-      })
-    end
+local languages = {
+  "markdown",
+  "markdown_inline",
+  "lua",
+  "javascript",
+  "c",
+  "cpp",
+  "vim",
+  "rust",
+  "html",
 }
 
-return { M }
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      local treesitter = require("nvim-treesitter")
+
+      treesitter.setup()
+      treesitter.install(languages)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = languages,
+        callback = function(args)
+          vim.treesitter.start(args.buf)
+
+          if args.match ~= "c" and args.match ~= "cpp" then
+            vim.bo[args.buf].indentexpr = "v:lua.require" .. string.char(39) .. "nvim-treesitter" .. string.char(39) .. ".indentexpr()"
+          end
+        end,
+      })
+    end,
+  },
+}
